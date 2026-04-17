@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mumble Redirector</title>
+</head>
+<body>
+    <h2 id="status">멈블 서버 확인 중...</h2>
+    <p id="msg"></p>
+    <a id="manual-link" href="#" style="display:none; padding: 10px; background: #007bff; color: white; text-decoration: none;">수동으로 실행하기</a>
+
+    <script>
+        // 1. 멈블 주소 리스트 (여기서 관리하면 돼)
+        const mumbleList = {
+            "sob": "mumble://auth.sonsofbane.com:64738/?title=SoB",
+            "goon": "mumble://fleet.server.:12345/?title=Fleet_Ops"
+        };
+
+        // 2. URL에서 파라미터 추출 (?target=xxx)
+        const params = new URLSearchParams(window.location.search);
+        const target = params.get('target');
+        const statusEl = document.getElementById('status');
+        const msgEl = document.getElementById('msg');
+        const linkEl = document.getElementById('manual-link');
+
+        if (target && mumbleList[target]) {
+            const mumbleUri = mumbleList[target];
+            statusEl.innerText = `${target} 멈블로 연결 중...`;
+            linkEl.href = mumbleUri;
+            linkEl.style.display = "inline-block";
+
+            // 자동 리다이렉트 실행
+            window.location.href = mumbleUri;
+        } else {
+            statusEl.innerText = "잘못된 접근이야!";
+            msgEl.innerText = "주소 뒤에 ?target=corp 또는 ?target=fleet 등을 붙여줘.";
+        }
+    </script>
+</body>
+</html>
