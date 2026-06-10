@@ -31,6 +31,15 @@
 
             // 자동 리다이렉트 실행
             window.location.href = mumbleUri;
+
+            // 2초(2000ms) 뒤 창 자동 닫기 시도
+            setTimeout(() => {
+                window.close();
+                // 브라우저 정책상 창이 안 닫혔을 경우를 대비한 메시지 변경
+                msgEl.innerText = "자동으로 창이 닫히지 않았다면, 이 탭을 직접 닫아주셔도 좋습니다.";
+            }, 2000);
+
+
         } else {
             statusEl.innerText = "잘못된 접근이야!";
             msgEl.innerText = "주소 뒤에 ?target=corp 또는 ?target=fleet 등을 붙여줘.";
